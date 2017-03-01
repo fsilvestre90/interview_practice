@@ -1,21 +1,15 @@
 public class AppleStockCalculator {
     public static int getMaxProfit(int[] yesterdaysPrices) {
+        int minPrice = yesterdaysPrices[0]; // lowest price so far
         int maxProfit = 0;
-        // we are going to compare each time, solution is O(N^2)
-        for (int outerTime = 0; outerTime < yesterdaysPrices.length; outerTime++) {
-            for (int innerTime = 0; innerTime < yesterdaysPrices.length; innerTime++) {
-                // now we get the times
-                int earlierTime = Math.min(outerTime, innerTime);
-                int laterTime = Math.max(outerTime, innerTime);
 
-                // now get the prices
-                int earlierPrice = yesterdaysPrices[earlierTime]; 
-                int laterPrice = yesterdaysPrices[laterTime];
+        for (int currentPrice : yesterdaysPrices) {
+            // ensure we have the minimum price
+            minPrice = Math.min(minPrice, currentPrice);
 
-                // calculate the potential profit
-                int potentialProfit = laterPrice - earlierPrice;
-                maxProfit = Math.max(maxProfit, potentialProfit);
-            }
+            int potentialProfit = currentPrice - minPrice;
+
+            maxProfit = Math.max(maxProfit, potentialProfit);
         }
         
         return maxProfit;
